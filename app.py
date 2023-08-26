@@ -104,7 +104,7 @@ def handle_message(event):
         about_us_event(event)
     elif message_text == "我想訂購商品":
         message = Products.list_all()
-    elif "I'd like to have" in message_text:
+    elif "i'd like to have" in message_text:
 
             product_name = message_text.split(',')[0]
             num_item = message_text.rsplit(':')[1]
