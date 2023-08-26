@@ -106,26 +106,26 @@ def handle_message(event):
         message = Products.list_all()
     elif "I'd like to have" in message_text:
 
-        product_name = message_text.split(',')[0]
-        num_item = message_text.rsplit(':')[1]
-        product = db_session.query(Products).filter(Products.name.like(product_name)).first()
+            product_name = message_text.split(',')[0]
+            num_item = message_text.rsplit(':')[1]
+            product = db_session.query(Products).filter(Products.name.like(product_name)).first()
 
-        if product:
+            if product:
 
-            cart.add(product=product_name, num=num_item)
-            #然後利用confirm_template的格式詢問用戶是否還要加入？
-            confirm_template = ConfirmTemplate(
-                text='Sure, {} {}, anything else?'.format(num_item, product_name),
-                actions=[
-                    MessageAction(label='Add', text='add'),
-                    MessageAction(label="That's it", text="That's it")
-                ])
+                cart.add(product=product_name, num=num_item)
+                #然後利用confirm_template的格式詢問用戶是否還要加入？
+                confirm_template = ConfirmTemplate(
+                    text='Sure, {} {}, anything else?'.format(num_item, product_name),
+                    actions=[
+                        MessageAction(label='Add', text='add'),
+                        MessageAction(label="That's it", text="That's it")
+                    ])
 
-            message = TemplateSendMessage(alt_text='anything else?', template=confirm_template)
-        else:
-            message = TextSendMessage(text='Sorrym We don,t have {}'.format(product_name))
+                message = TemplateSendMessage(alt_text='anything else?', template=confirm_template)
+            else:
+                message = TextSendMessage(text='Sorrym We don,t have {}'.format(product_name))
 
-        print(cart.bucket())
+            print(cart.bucket())
 
     elif message_text in ["my cart", "cart", "that's it"]:
 
