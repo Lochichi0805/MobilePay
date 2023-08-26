@@ -14,8 +14,8 @@ from linebot.models import *
 app = Flask(__name__)
 
 
-line_bot_api = LineBotApi('')
-handler = WebhookHandler('')
+line_bot_api = LineBotApi('Qk1ohlVUbRtWiG1OiCww9ZGNv4e21KSaEAGzqzLf/9AgAXYZjo8moKEFQcjoNm/vMg7v8xQLHoith0CX7r72kYIobYCeVXa+15fMCsi2QAhz1fRVoswmKxr6cPrY3CNDcRqADHE1V/tdg2WfPzL1kgdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('acd0e3e7b8a8aef5df779d58d1284377')
 
 
 app = Flask(__name__)
@@ -102,7 +102,7 @@ def handdler_follow(event):
         TextSendMessage(text=welcome_msg)
     )
 
-    
+
 if __name__ == "__main__":
     
     app.run()
