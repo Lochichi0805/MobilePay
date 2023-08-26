@@ -10,6 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,StickerSendMessage,FollowEvent,UnfollowEvent,
 )
 from linebot.models import *
+from models.user import Users
+from database import db_session, init_db
 
 app = Flask(__name__)
 
@@ -20,6 +22,20 @@ handler = WebhookHandler('acd0e3e7b8a8aef5df779d58d1284377')
 
 app = Flask(__name__)
 
+
+#建立或取得user
+def get_or_create_user(user_id):
+    #從id=user_id先搜尋有沒有這個user，如果有的話就會直接跳到return
+    user = db_session.query(Users).filter_by(id=user_id).first()
+    #沒有的話就會透過line_bot_api來取得用戶資訊
+    if not user:
+        profile = line_bot_api.get_profile(user_id)
+        #然後再建立user並且存入到資料庫當中
+        user = Users(id=user_id, nick_name=profile.display_name, image_url=profile.picture_url)
+        db_session.add(user)
+        db_session.commit()
+
+    return user
 
 def about_us_event(event):
     emoji = [
@@ -52,6 +68,8 @@ Hello! 您好，歡迎您成為 Master RenderP 的好友！
     line_bot_api.reply_message(
         event.reply_token,
         [text_message, sticker_message])
+    
+
     
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
@@ -86,23 +104,8 @@ def handle_message(event):
         event.reploy_token, TextSendMessage(text="Hi!! Welcome to LSTORE")
     )
 	
-@handler.add(FollowEvent)
-def handdler_follow(event):
-    welcome_msg = """ Hello！ 您好，歡迎成為 MobilePay 的好友！
-
-我是Master 支付小幫手 
-
--這裡有商城，還可以購物喔~
--直接點選下方【圖中】選單功能
-
--期待您的光臨！"""
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=welcome_msg)
-    )
 
 
 if __name__ == "__main__":
-    
+    init_db()
     app.run()
