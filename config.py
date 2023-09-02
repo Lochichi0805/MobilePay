@@ -1,0 +1,11 @@
+import os
+
+
+class Config:
+
+    CHANNEL_ACCESS_TOKEN = 'Qk1ohlVUbRtWiG1OiCww9ZGNv4e21KSaEAGzqzLf/9AgAXYZjo8moKEFQcjoNm/vMg7v8xQLHoith0CX7r72kYIobYCeVXa+15fMCsi2QAhz1fRVoswmKxr6cPrY3CNDcRqADHE1V/tdg2WfPzL1kgdB04t89/1O/w1cDnyilFU='
+    CHANNEL_SECRET = 'acd0e3e7b8a8aef5df779d58d1284377'
+
+    LINE_PAY_ID = '2000605545'
+    LINE_PAY_SECRET = '4709c50681e7176c83fd68c6c753859f'
+    STORE_IMAGE_URL = 'https://i.imgur.com/0KinQXT.jpg'
